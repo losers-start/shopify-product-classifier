@@ -1,0 +1,53 @@
+{% extends "base.html" %} 
+{% block content %}
+
+<h2>Products</h2>
+<form class="row g-2 my-3">
+  <div class="col-md-6">
+    <input class="form-control" name="q" value="{{q}}" placeholder="Search" />
+  </div>
+  <div class="col-md-3">
+    <select class="form-select" name="status">
+      <option value="">All</option>
+      <option>PENDING</option>
+      <option>PROCESSING</option>
+      <option>COMPLETED</option>
+      <option>FAILED</option>
+      <option>REVIEW_REQUIRED</option>
+    </select>
+  </div>
+  <div class="col-md-2"><button class="btn btn-primary">Search</button></div>
+</form>
+<div class="table-responsive">
+  <table class="table table-hover bg-white">
+    <tr>
+      <th>Product</th>
+      <th>Source</th>
+      <th>Prediction</th>
+      <th>Score</th>
+      <th>Status</th>
+    </tr>
+    {% for p in page %}
+    <tr>
+      <td>
+        <a href="/products/{{p.id}}/">{{p.product_number}}</a
+        ><br />{{p.product_name|truncatechars:60}}
+      </td>
+      <td>{{p.source_sub_category}}</td>
+      <td>
+        {% if p.classification %}
+        {{p.classification.predicted_category.breadcrumb}}
+        {% endif %}
+      </td>
+      <td>
+        {% if p.classification %}
+        {{p.classification.confidence_score}}
+        {% endif %}
+        
+      </td>
+      <td>{{p.processing_status}}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

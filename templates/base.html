@@ -1,0 +1,40 @@
+{% load static %}
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Shopify Classifier</title>
+    <link
+      href="{% static 'css/bootstrap.min.css' %}" 
+      rel="stylesheet"
+    /> 
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+
+  <body>
+    <nav class="navbar navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="/">Shopify Product Classifier</a
+        ><a class="btn btn-outline-light" href="/products/">Products</a>
+      </div>
+    </nav>
+    <main class="container py-4">
+      {% for m in messages %}
+      <div class="alert alert-info">{{m}}</div>
+      {% endfor %} 
+      {% block content %}
+      {% endblock %}
+    <br>
+    <br>
+    <br>
+
+    </main>
+ <!-- Footer -->
+ <footer class="text-center py-3 mt-5 border-top">
+  <small class="text-muted">
+    © 2026 · <strong>TPL</strong> | Developed by A.
+  </small>
+</footer>
+    <script src="{% static 'js/app.js' %}"></script>
+  </body>
+</html>
