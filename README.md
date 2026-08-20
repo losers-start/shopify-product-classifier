@@ -101,7 +101,7 @@ COMPLETED
 
 ---
 
-## **4. Confidence-Based Review **
+** ## 4. Confidence-Based Review **
 
 Classification results are evaluated using confidence thresholds.
 Depending on the confidence score, a product can be:
