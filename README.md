@@ -8,7 +8,7 @@ It also provides confidence scores, alternative category suggestions, review wor
 
 ---
 
-## 📌 Project Overview
+##  Project Overview
 
 The Shopify Product Taxonomy Classifier is designed to automatically classify large product catalogs into appropriate Shopify taxonomy categories.
 
@@ -43,7 +43,7 @@ Existing `Product Category` and `Product Sub Category` fields from the sample Ex
 
 ---
 
-# 🚀 Key Features
+#  Key Features
 
 ## 1. Excel Product Import
 
@@ -98,3 +98,125 @@ Furniture > Kitchen & Dining Furniture
 
 Status:
 COMPLETED
+
+## 4. Confidence-Based Review
+
+Classification results are evaluated using confidence thresholds.
+
+Depending on the confidence score, a product can be:
+
+  1) Automatically completed
+  2) Sent for manual review
+  3) Marked as failed
+
+Example:
+Confidence >= 80%
+        ↓
+   COMPLETED
+
+Confidence < 80%
+        ↓
+ REVIEW_REQUIRED
+
+This allows uncertain predictions to be reviewed by users instead of automatically accepting low-confidence results
+
+## 5. Product Processing Workflow
+
+                Excel File
+                    |
+                    v
+              Product Import
+                    |
+                    v
+             SQL Server DB
+                    |
+                    v
+          Pending Products
+                    |
+                    v
+          Celery Background Job
+                    |
+                    v
+        Classification Engine
+                    |
+          +---------+---------+
+          |                   |
+          v                   v
+    High Confidence      Low Confidence
+          |                   |
+          v                   v
+      COMPLETED         REVIEW_REQUIRED
+          |                   |
+          +---------+---------+
+                    |
+                    v
+             User Review
+                    |
+                    v
+              Final Result
+
+## 6. Technology Stack
+
+Python - Backend programming
+Django - Web application framework
+Django REST Framework -	REST API development
+Microsoft SQL Server	- Database
+mssql-django - Django SQL Server integration
+pyodbc -	SQL Server connectivity
+Pandas -	Excel/data processing
+OpenPyXL-	Excel file handling
+Celery -	Background task processing
+Redis -	Celery message broker
+HTML -	Frontend structure
+CSS -	Frontend styling
+JavaScript -	Frontend interaction
+Bootstrap -	Responsive UI
+
+## 7. Classification Engine
+The classification process uses product information and taxonomy breadcrumbs to determine similarity.
+
+ Step 1 : Product Text Preparation - Relevant product fields are combined into a searchable text representation.
+ Step 2 : Taxonomy Text Preparation - Each taxonomy category is represented using its breadcrumb.
+ Step 3 : TF-IDF Vectorization - The system converts product text and taxonomy text into numerical TF-IDF vectors.TF-IDF               helps identify important words and reduces the influence of common words.
+ Step 4 : Similarity Calculation - Cosine similarity is used to compare the product representation with taxonomy                       representations.
+ Step 5 : Confidence Evaluation - The highest-scoring taxonomy category is selected as the recommended category.The                    confidence score is then evaluated against configured thresholds.
+ Step 6 : Alternative Categories - The classifier also keeps alternative category suggestions.
+
+## 8. Image URL Support
+
+Image URLs can also be used as an additional product signal.The prototype validates image URLs and incorporates available image-related information into the classification workflow.The current implementation is intentionally lightweight and explainable.
+
+For a production-grade system, the image classification component can be replaced or extended with computer vision models such as:
+  1) CLIP
+  2) Vision Transformers
+  3) Image Embedding Models
+  4) Multimodal LLM-based classification
+
+## 9. Product Status Management
+
+Each product can have one of the following processing states:
+  PENDING - Product has been imported but has not yet been processed.
+  PROCESSING - Product is currently being processed by a Celery worker.
+  COMPLETED - Product has been successfully classified with sufficient confidence.
+  FAILED - An error occurred during processing.
+  REVIEW_REQUIRED - The classification confidence is below the configured threshold and requires manual validation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
