@@ -1,40 +1,100 @@
 # Shopify Product Taxonomy Classifier
 
- Built with Python, Django, Django REST Framework, Microsoft SQL Server, HTML/CSS/JavaScript, Pandas and Celery/Redis.
+An intelligent and explainable product classification system built with **Python, Django, Django REST Framework, Microsoft SQL Server, Pandas, Celery, Redis, HTML, CSS, and JavaScript**.
 
-# Sample
-The supplied Product List.xlsx contains 4,999 products and 48 columns. Existing Product Category/Product Sub Category are retained as reference/evaluation fields, not simply returned as the Shopify prediction.
+The application imports product data from Excel, analyzes product information, and recommends the most appropriate **Shopify Standard Product Taxonomy** category using explainable text-similarity techniques.
 
-# Setup
-1. Create SQL Server database:
-   CREATE DATABASE ShopifyClassifier;
-2. set SQL Server credentials.
-3. Install: 
-    1) install python above 3.12 version and
-    2) activate the scripts and
-    3) install all version of pip format in requirements.txt 
-4. Run `python manage.py makemigrations` and `python manage.py migrate`
-5. Run `python manage.py import_sample`
-6. Run `python manage.py runserver`
-7. Open http://127.0.0.1:8000/
+It also provides confidence scores, alternative category suggestions, review workflows, background processing, and fault-tolerant batch classification.
 
-For background processing, start Redis and:
-`celery -A config worker -l info --pool=solo`
+---
 
-# Classification
-The prototype uses explainable TF-IDF similarity against taxonomy breadcrumbs, structured fields, simple attribute extraction, confidence thresholds and alternative categories. Image URLs are validated/used as an additional text signal; a production deployment can replace this with CLIP or another vision model.
+## 📌 Project Overview
 
-# Resume/fault tolerance
-Products have PENDING, PROCESSING, COMPLETED, FAILED and REVIEW_REQUIRED states. Celery retries failed work, and the batch only queues pending/failed products, so completed products are not restarted.
+The Shopify Product Taxonomy Classifier is designed to automatically classify large product catalogs into appropriate Shopify taxonomy categories.
 
-# API
-GET /api/dashboard/
-GET /api/products/
-GET /api/classifications/
-POST /api/process/
-POST /api/classifications/<id>/approve/
-POST /api/classifications/<id>/review/
+The system accepts product information such as:
 
-# Shopify taxonomy
-Use the official Shopify Standard Product Taxonomy distribution for production taxonomy loading. 
-The small CATEGORY_MAP in `classification/engine.py` is a runnable prototype mapping for this furniture sample.
+- Product Name
+- Product Title
+- Product Description
+- Product Category
+- Product Sub Category
+- Product Type
+- Brand
+- Material
+- Color
+- Size
+- Gender
+- Image URL
+- Other structured product attributes
+
+The classifier combines these fields and compares the product information against available taxonomy categories and their breadcrumbs.
+
+Instead of returning only a prediction, the system provides an **explainable classification result** with:
+
+- Recommended Shopify category
+- Confidence score
+- Alternative categories
+- Classification status
+- Review status
+- Processing information
+
+Existing `Product Category` and `Product Sub Category` fields from the sample Excel file are retained as **reference/evaluation fields** and are not blindly returned as the Shopify prediction.
+
+---
+
+# 🚀 Key Features
+
+## 1. Excel Product Import
+
+The application supports importing product catalog data from Excel files.
+
+The supplied sample file contains:
+
+- **4,999 products**
+- **48 columns**
+
+Pandas is used to read and process the Excel data before storing it in the database.
+
+---
+
+## 2. Automated Product Classification
+
+Products are automatically classified using an explainable classification engine.
+
+The prototype uses:
+
+- TF-IDF vectorization
+- Cosine similarity
+- Taxonomy breadcrumb matching
+- Product title matching
+- Product description matching
+- Structured product attributes
+- Simple attribute extraction
+- Confidence thresholds
+- Alternative category recommendations
+
+---
+
+## 3. Explainable Predictions
+
+The classifier does not simply return a category.
+
+For each classification, the system can provide information such as:
+
+```text
+Product:
+Modern Wooden Dining Table
+
+Predicted Category:
+Furniture > Tables > Dining Tables
+
+Confidence:
+87.4%
+
+Alternative Categories:
+Furniture > Tables
+Furniture > Kitchen & Dining Furniture
+
+Status:
+COMPLETED
