@@ -99,6 +99,8 @@ Furniture > Kitchen & Dining Furniture
 Status:
 COMPLETED
 
+---
+
 ## **4. Confidence-Based Review **
 
 Classification results are evaluated using confidence thresholds.
@@ -118,6 +120,8 @@ Confidence < 80%
  REVIEW_REQUIRED
 
 This allows uncertain predictions to be reviewed by users instead of automatically accepting low-confidence results
+
+---
 
 ## ** 5. Product Processing Workflow **
 
@@ -154,6 +158,8 @@ This allows uncertain predictions to be reviewed by users instead of automatical
                     v
               Final Result
 
+---
+
 ## ** 6. Technology Stack **
 
 Python - Backend programming
@@ -171,6 +177,8 @@ CSS -	Frontend styling
 JavaScript -	Frontend interaction
 Bootstrap -	Responsive UI
 
+---
+
 ## ** 7. Classification Engine **
 
 The classification process uses product information and taxonomy breadcrumbs to determine similarity.
@@ -182,6 +190,8 @@ The classification process uses product information and taxonomy breadcrumbs to 
  Step 5 : Confidence Evaluation - The highest-scoring taxonomy category is selected as the recommended category.The                    confidence score is then evaluated against configured thresholds.
  Step 6 : Alternative Categories - The classifier also keeps alternative category suggestions.
 
+---
+
 ## ** 8. Image URL Support **
 
 Image URLs can also be used as an additional product signal.The prototype validates image URLs and incorporates available image-related information into the classification workflow.The current implementation is intentionally lightweight and explainable.
@@ -192,6 +202,8 @@ For a production-grade system, the image classification component can be replace
   3) Image Embedding Models
   4) Multimodal LLM-based classification
 
+---
+
 ## ** 9. Product Status Management **
 
 Each product can have one of the following processing states:
@@ -200,6 +212,8 @@ Each product can have one of the following processing states:
   COMPLETED - Product has been successfully classified with sufficient confidence.
   FAILED - An error occurred during processing.
   REVIEW_REQUIRED - The classification confidence is below the configured threshold and requires manual validation.
+
+---
 
 ## ** 10. Image Information **
 
@@ -210,6 +224,8 @@ For a production implementation, image understanding can be enhanced using:
     Vision Transformers
     Image embeddings
     Multimodal models
+
+---
 
 ## ** 11. Database Architecture **
 
@@ -225,9 +241,13 @@ Microsoft SQL Server is used as the primary database.
     Review information
     Classification history
 
+---
+
 ## ** 12. REST API **
 
 The project includes a Django REST Framework API for integrating the classification functionality with other applications.
+
+---
 
 ## ** 13. Web Application **
 
@@ -245,6 +265,8 @@ The project includes a Django REST Framework API for integrating the classificat
     Review-required product identification
     Classification approval
     Processing status monitoring
+
+---
 
 ## ** 14 . Evaluation Capability **
 
